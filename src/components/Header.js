@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Header = ({title}) => {
+const Header = (props) => {
   return (
-    <div classNameName="Header">
+    <div className="Header">
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a className="navbar-brand" href="#">{title}</a>
+            <a className="navbar-brand" href="#">{props.title}</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
@@ -30,8 +30,7 @@ const Header = ({title}) => {
                 </li>
                 </ul>
                 <form className="form-inline my-2 my-lg-0">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                    <button className="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+                    <input onKeyUp={props.handleSearch} id="filter" className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
                 </form>
                 <form className="form-inline my-2 my-lg-0">
                     <button className="btn btn-outline-light ml-1 my-2 my-sm-0" type="submit">My Cart</button>

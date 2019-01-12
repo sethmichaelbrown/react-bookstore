@@ -8,14 +8,14 @@ const Book = (props) => {
         <div className="book-list">
             <div className="collection-item container">
                 <div className="row">
-                    <div className="col-md-6 mb-1">
+                    <div className="col-md-6">
                         <h6>{props.book.title}</h6>
                         <p>{props.book.subtitle} </p>
                     </div>
                     <div className="col-md-2">{props.book.author}</div>
                     <div className="col-md-2">{`$${price}`}</div>
                     <div className="col-md-2 mx-auto align-middle">
-                        <button type="button" class="btn btn-primary">Add to Cart</button>
+                        <button id={props.book.title} onClick={props.handleClick} type="button" className="btn btn-primary">Add to Cart</button>
                     </div>
                 </div>
             </div>
