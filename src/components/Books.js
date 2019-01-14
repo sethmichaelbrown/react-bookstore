@@ -4,6 +4,7 @@ import Book from './Book'
 const Books = (props) => {
     let count = 0
 
+
     const filterString = props.filterString.toLowerCase()
     const filteredObj = props.bookList.filter(book => (book.title.toLowerCase().includes(filterString)))
 
@@ -21,7 +22,8 @@ const Books = (props) => {
                         </div>
                     </div>        
                     {!props.filterString ?
-                        props.bookList.map(book => <div className="list-group-item mt-1"><Book book={book} handleAddClick={props.handleAddClick} id={count++}/></div>):
+                        props.bookList.map(book => <div className="list-group-item mt-1"><Book book={book} handleAddClick={props.handleAddClick} id={count++}/></div>)
+                        :
                         filteredObj.map(book => <div className="list-group-item mt-1"><Book book={book} handleAddClick={props.handleAddClick} id={count++}/></div>)
                     }
                 </div>

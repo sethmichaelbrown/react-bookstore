@@ -24,19 +24,20 @@ class App extends Component {
   }
 
   handleAddClick = (event) => {
-    const findTitle = this.state.books.find(item => item.title === event.target.id)
+    const newState = {...this.state}   
+    const findTitle = newState.books.find(item => item.title === event.target.id) 
     findTitle.inCart = true 
-    // const newState = {...this.state}
-    // console.log(newState)
-    // console.log(event.target.id)
-    // const thing = findTitle.inCart
-    // this.setState({thing: true})
+    this.setState({state: newState})
   }
 
   handleRemove = (event) => {
-    const findTitle = this.state.books.find(item => item.title === event.target.id)
-    const thing = findTitle.inCart
-    this.setState({thing: false})
+    const newState = {...this.state}   
+    const findTitle = newState.books.find(item => item.title === event.target.id) 
+    findTitle.inCart = false
+    this.state.cartTotal = (parseInt(newState.cartTotal - findTitle.price)).toFixed(2)
+
+    this.setState({state: newState})
+
   }
 
   handleSearch = (event) => {
@@ -51,7 +52,7 @@ class App extends Component {
       const inCartPrices = inCartItems.forEach(book => prices.push(book.price))
       const total = (prices.reduce((accum, el) => accum + el, 0)).toFixed(2)
 
-      this.setState({cartTotal: total })
+      this.setState({cartTotal: total})
     }
   }
 
