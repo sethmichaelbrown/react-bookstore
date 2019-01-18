@@ -23,10 +23,27 @@ class App extends Component {
     this.setState({ books: json })
   }
 
+
+  labelPatchServer = async (inCart, book) => {
+    await fetch('https://smb-collective-api.herokuapp.com/api/books', {
+      method: 'PATCH',
+      headers: {
+        'Acawaitcept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "book.inCart": inCart,
+        "book": book
+      })
+    })
+  }
+
   handleAddClick = (event) => {
     const newState = { ...this.state }
     const findTitle = newState.books.find(item => item.title === event.target.id)
     findTitle.inCart = true
+
+    this.labelPatchServer(true, findTitle)
     this.setState({ state: newState })
   }
 
