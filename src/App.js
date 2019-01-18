@@ -18,23 +18,20 @@ class App extends Component {
   }
 
   componentDidMount = async () => {
-    const response = await fetch('https://smb-collective-api.herokuapp.com/api/books')
+    const response = await fetch('http://localhost:8082/api/books')
     const json = await response.json()
     this.setState({ books: json })
+    console.log(this.state)
   }
 
 
-  labelPatchServer = async (inCart, book) => {
-    await fetch('https://smb-collective-api.herokuapp.com/api/books', {
+  labelPatchServer = async (id) => {
+    await fetch(`http://localhost:8082/api/books/cart/add/${id}`, {
       method: 'PATCH',
       headers: {
         'Acawaitcept': 'application/json',
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "book.inCart": inCart,
-        "book": book
-      })
+      }
     })
   }
 
@@ -43,8 +40,9 @@ class App extends Component {
     const findTitle = newState.books.find(item => item.title === event.target.id)
     findTitle.inCart = true
 
-    this.labelPatchServer(true, findTitle)
-    this.setState({ state: newState })
+    this.labelPatchServer(findTitle.id)
+    console.log(newState)
+    this.setState(newState)
   }
 
   handleRemove = (event) => {
@@ -53,7 +51,7 @@ class App extends Component {
     findTitle.inCart = false
     this.state.cartTotal = (parseInt(newState.cartTotal - findTitle.price)).toFixed(2)
 
-    this.setState({ state: newState })
+    this.setState(newState)
 
   }
 
@@ -64,6 +62,7 @@ class App extends Component {
   handleCartClick = (event) => {
     if (event.target.id === "cart") {
       this.setState({ displayCart: true })
+      console.log(this.state)
       let prices = []
       const inCartItems = this.state.books.filter(book => book.inCart)
       const inCartPrices = inCartItems.forEach(book => prices.push(book.price))
