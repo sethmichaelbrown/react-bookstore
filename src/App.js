@@ -17,53 +17,53 @@ class App extends Component {
     cartTotal: 0
   }
 
-  componentDidMount = async() => {
-    const response = await fetch('http://localhost:8082/api/books')
+  componentDidMount = async () => {
+    const response = await fetch('https://smb-collective-api.herokuapp.com/api/books')
     const json = await response.json()
-    this.setState({books: json})
+    this.setState({ books: json })
   }
 
   handleAddClick = (event) => {
-    const newState = {...this.state}   
-    const findTitle = newState.books.find(item => item.title === event.target.id) 
-    findTitle.inCart = true 
-    this.setState({state: newState})
+    const newState = { ...this.state }
+    const findTitle = newState.books.find(item => item.title === event.target.id)
+    findTitle.inCart = true
+    this.setState({ state: newState })
   }
 
   handleRemove = (event) => {
-    const newState = {...this.state}   
-    const findTitle = newState.books.find(item => item.title === event.target.id) 
+    const newState = { ...this.state }
+    const findTitle = newState.books.find(item => item.title === event.target.id)
     findTitle.inCart = false
     this.state.cartTotal = (parseInt(newState.cartTotal - findTitle.price)).toFixed(2)
 
-    this.setState({state: newState})
+    this.setState({ state: newState })
 
   }
 
   handleSearch = (event) => {
-    this.setState({filterString: event.target.value.toLowerCase()})
+    this.setState({ filterString: event.target.value.toLowerCase() })
   }
 
   handleCartClick = (event) => {
-    if(event.target.id === "cart"){
-      this.setState({displayCart: true})
+    if (event.target.id === "cart") {
+      this.setState({ displayCart: true })
       let prices = []
       const inCartItems = this.state.books.filter(book => book.inCart)
       const inCartPrices = inCartItems.forEach(book => prices.push(book.price))
       const total = (prices.reduce((accum, el) => accum + el, 0)).toFixed(2)
 
-      this.setState({cartTotal: total})
+      this.setState({ cartTotal: total })
     }
   }
 
   handleHomeClick = (event) => {
-    if(event.target.id === "home"){
-      this.setState({displayCart: false})    
+    if (event.target.id === "home") {
+      this.setState({ displayCart: false })
     }
   }
 
   cartTotal = (event) => {
-    if(event.target.id === "cart"){
+    if (event.target.id === "cart") {
       console.log(this.state)
     }
   }
@@ -71,24 +71,24 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header title="Musty's Books" 
-            handleSearch={this.handleSearch} 
-            handleCartClick={this.handleCartClick} 
-            handleHomeClick={this.handleHomeClick}
-            cartTotal={this.cartTotal}/>
-          
-          {this.state.displayCart ?
-            <Cart 
-              state={this.state.books}
-              handleRemove={this.handleRemove}
-              cartTotal={this.state.cartTotal}/> : 
-              this.state.books ? 
-                <Books bookList={this.state.books} 
-                        handleAddClick={this.handleAddClick} 
-                        filterString={this.state.filterString}/> : 
-                <Loading />
-            }
-        <Footer copyright="2019"/>
+        <Header title="Musty's Books"
+          handleSearch={this.handleSearch}
+          handleCartClick={this.handleCartClick}
+          handleHomeClick={this.handleHomeClick}
+          cartTotal={this.cartTotal} />
+
+        {this.state.displayCart ?
+          <Cart
+            state={this.state.books}
+            handleRemove={this.handleRemove}
+            cartTotal={this.state.cartTotal} /> :
+          this.state.books ?
+            <Books bookList={this.state.books}
+              handleAddClick={this.handleAddClick}
+              filterString={this.state.filterString} /> :
+            <Loading />
+        }
+        <Footer copyright="2019" />
       </div>
 
     );
